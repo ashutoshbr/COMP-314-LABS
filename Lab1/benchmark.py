@@ -2,17 +2,17 @@ import timeit
 
 setup_code = """
 from search import linear_search, binary_search
-size = 1_000_000
-big_data = list(range(size))
+SIZE = 10_000_000
+big_data = list(range(SIZE))
 
-to_find = size + 1
+to_find = SIZE + 1
 """
 
 ls_code = """linear_search(to_find, big_data)"""
-ls_time = timeit.timeit(stmt=ls_code, setup=setup_code, number=1)
-print("Time taken by linear search for 100,000,000 data size: ", ls_time)
+ls_time = timeit.timeit(stmt=ls_code, setup=setup_code, number=10)
+print(f"Time taken by linear search: {ls_time/10}")
 
 
 bs_code = """binary_search(to_find, big_data)"""
-bs_time = timeit.timeit(stmt=bs_code, setup=setup_code, number=1)
-print("Time taken by binary search for 100,000,000 data size: ", bs_time)
+bs_time = timeit.timeit(stmt=bs_code, setup=setup_code, number=10)
+print(f"Time taken by binary search: {bs_time/10}")
