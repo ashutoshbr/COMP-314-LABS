@@ -15,7 +15,7 @@ class TestInsertionSort(unittest.TestCase):
 
 class TestMergeSort(unittest.TestCase):
     def test_sorted(self):
-        obtained = merge_sort(array, 0, len(array))
+        obtained = merge_sort(array)
         self.assertEqual(obtained, sorted_data)
 
 
