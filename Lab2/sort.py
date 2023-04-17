@@ -9,38 +9,37 @@ def insertion_sort(array: list):
     return array
 
 
-def merge(array: list, start: int, mid: int, end: int):
-    left_array = array[start:mid]
-    right_array = array[mid:end]
-
-    left_index = 0
-    right_index = 0
-    array_index = start
+def merge(left_array: list, right_array: list) -> list:
+    sorted_array = [None] * (len(left_array) + len(right_array))
+    left_index = right_index = array_index = 0
 
     while left_index < len(left_array) and right_index < len(right_array):
         if left_array[left_index] <= right_array[right_index]:
-            array[array_index] = left_array[left_index]
+            sorted_array[array_index] = left_array[left_index]
             left_index = left_index + 1
         else:
-            array[array_index] = right_array[right_index]
+            sorted_array[array_index] = right_array[right_index]
             right_index = right_index + 1
         array_index = array_index + 1
 
     while left_index < len(left_array):
-        array[array_index] = left_array[left_index]
+        sorted_array[array_index] = left_array[left_index]
         left_index = left_index + 1
         array_index = array_index + 1
     while right_index < len(right_array):
-        array[array_index] = right_array[right_index]
+        sorted_array[array_index] = right_array[right_index]
         right_index = right_index + 1
         array_index = array_index + 1
 
+    return sorted_array
 
-def merge_sort(array: list, start: int, end: int):
-    if start >= end:
+
+def merge_sort(array: list) -> list:
+    if len(array) <= 1:
         return array
-    mid = (start + end) // 2
-    merge_sort(array, start, mid)
-    merge_sort(array, mid + 1, end)
-    merge(array, start, mid, end)
-    return array
+
+    mid = len(array) // 2
+
+    left = merge_sort(array[:mid])
+    right = merge_sort(array[mid:])
+    return merge(left, right)

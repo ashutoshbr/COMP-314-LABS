@@ -10,15 +10,13 @@ sorted_data = [2, 12, 15, 23, 56, 68, 99]
 class TestInsertionSort(unittest.TestCase):
     def test_sorted(self):
         obtained = insertion_sort(array)
-        expected = sorted_data
-        self.assertEqual(obtained, expected)
+        self.assertEqual(obtained, sorted_data)
 
 
 class TestMergeSort(unittest.TestCase):
     def test_sorted(self):
-        obtained = merge_sort(array, 0, len(array) - 1)
-        expected = sorted_data
-        self.assertEqual(obtained, expected)
+        obtained = merge_sort(array, 0, len(array))
+        self.assertEqual(obtained, sorted_data)
 
 
 if __name__ == "__main__":
