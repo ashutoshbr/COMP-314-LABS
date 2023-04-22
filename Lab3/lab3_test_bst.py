@@ -1,12 +1,12 @@
 import unittest
 from bst import BinarySearchTree
 
-class BSTTestCase(unittest.TestCase):
 
+class BSTTestCase(unittest.TestCase):
     def setUp(self):
         """
         Executed before each test method.
-        Before each test method, create a BST with some fixed key-values. 
+        Before each test method, create a BST with some fixed key-values.
         """
         self.bst = BinarySearchTree()
         self.bst.add(10, "Value for 10")
@@ -17,7 +17,7 @@ class BSTTestCase(unittest.TestCase):
         self.bst.add(40, "Value for 40")
         self.bst.add(30, "Value for 30")
         self.bst.add(45, "Value for 45")
-    
+
     def test_add(self):
         """
         tests for add
@@ -27,7 +27,7 @@ class BSTTestCase(unittest.TestCase):
 
         # bsTree must be empty
         self.assertEqual(bsTree.size(), 0)
-        
+
         # Add a key-value pair
         bsTree.add(15, "Value for 15")
         # Size of bsTree must be 1
@@ -62,13 +62,15 @@ class BSTTestCase(unittest.TestCase):
         """
         actual_output = self.bst.postorder_walk()
         expected_output = [1, 8, 5, 30, 45, 40, 52, 10]
-        
+
         self.assertListEqual(actual_output, expected_output)
 
         # Add one node
         self.bst.add(25, "Value for 25")
         # Postorder traversal must return a different sequence
-        self.assertListEqual(self.bst.postorder_walk(), [1, 8, 5, 25, 30, 45, 40, 52, 10])
+        self.assertListEqual(
+            self.bst.postorder_walk(), [1, 8, 5, 25, 30, 45, 40, 52, 10]
+        )
 
     def test_preorder(self):
         """
@@ -79,8 +81,10 @@ class BSTTestCase(unittest.TestCase):
         # Add one node
         self.bst.add(25, "Value for 25")
         # Preorder traversal must return a different sequence
-        self.assertListEqual(self.bst.preorder_walk(), [10, 5, 1, 8, 52, 40, 30, 25, 45])
-    
+        self.assertListEqual(
+            self.bst.preorder_walk(), [10, 5, 1, 8, 52, 40, 30, 25, 45]
+        )
+
     def test_search(self):
         """
         tests for search
@@ -88,7 +92,7 @@ class BSTTestCase(unittest.TestCase):
         actual_output = self.bst.search(40)
         expected_output = "Value for 40"
         self.assertEqual(actual_output, expected_output)
-    
+
         self.assertFalse(self.bst.search(90))
 
         self.bst.add(90, "Value for 90")
@@ -99,7 +103,7 @@ class BSTTestCase(unittest.TestCase):
         tests for remove
         """
         self.bst.remove(40)
-        
+
         self.assertEqual(self.bst.size(), 7)
         self.assertListEqual(self.bst.inorder_walk(), [1, 5, 8, 10, 30, 45, 52])
         self.assertListEqual(self.bst.preorder_walk(), [10, 5, 1, 8, 52, 30, 45])
@@ -134,5 +138,6 @@ class BSTTestCase(unittest.TestCase):
         # Now the largest key is 54
         self.assertTupleEqual(self.bst.largest(), (54, "Value for 54"))
 
+
 if __name__ == "__main__":
-    unittest.main()    
+    unittest.main()
