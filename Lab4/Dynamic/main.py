@@ -1,4 +1,4 @@
-def dynamic_kp(values: int, weights: int, capacity: int) -> int:
+def dynamic_kp(values: list[int], weights: list[int], capacity: int) -> int:
     assert len(values) == len(weights), "values and weights must have same size"
     length = len(values)
     K = [[0 for _ in range(capacity + 1)] for _ in range(length + 1)]
