@@ -15,14 +15,25 @@ G = nx.read_weighted_edgelist(
     "./Lab5/mammalia-bat-roosting-indiana/mammalia-bat-roosting-indiana.edges"
 )
 
-# Number of nodes and edges
-num_of_nodes = nx.number_of_nodes(G)
-num_of_edges = nx.number_of_edges(G)
-# Average degree
-avg_degree = num_of_edges / num_of_nodes
+
+def get_nodes_edges(G) -> tuple:
+    """
+    Number of nodes and edges as a tuple(V, E)
+    """
+    return (nx.number_of_nodes(G), nx.number_of_edges(G))
+
+
+def get_avg_degree(G) -> float:
+    """
+    Average degree = nodes/edges
+    """
+    return get_nodes_edges(G)[0] / get_nodes_edges(G)[1]
 
 
 def get_density(G) -> int | float:
+    """
+    Density: Ratio of the number of edges to the number of possible edges in the network
+    """
     num_of_nodes = nx.number_of_nodes(G)
     num_of_edges = nx.number_of_edges(G)
     if num_of_nodes == 0:
@@ -33,10 +44,16 @@ def get_density(G) -> int | float:
 
 
 def get_diameter(G) -> int:
+    """
+    Diameter: Length of the shortest path between the most distanced nodes
+    """
     return nx.diameter(G)
 
 
 def clustering_coefficients(G) -> dict:
+    """
+    Clustering coefficients of all the nodes
+    """
     clustering_coeffs = {}
     for node in G.nodes:
         neighbours = list(nx.neighbors(G, node))
@@ -58,6 +75,9 @@ def clustering_coefficients(G) -> dict:
 
 
 def avg_cc(coefficients: dict) -> float:
+    """
+    Average of the clustering coefficients
+    """
     avg = 0.0
     for value in coefficients.values():
         avg += value
@@ -66,9 +86,9 @@ def avg_cc(coefficients: dict) -> float:
 
 
 if __name__ == "__main__":
-    print("num_of_nodes:", num_of_nodes)
-    print("num_of_edges:", num_of_edges)
-    print("Average degree:", avg_degree)
+    print("num_of_nodes:", get_nodes_edges(G)[0])
+    print("num_of_edges:", get_nodes_edges(G)[1])
+    print("Average degree:", get_avg_degree(G))
     density = get_density(G)
     print("Density: ", density)
     print("Diameter: ", get_diameter(G))
@@ -80,8 +100,8 @@ if __name__ == "__main__":
     assert density == expected_den
     # Test clustering
     cc = nx.clustering(G)
-    expected_cc = sum(cc.values()) / len(cc.values())
-    assert avg_clustering_coeffs == expected_cc
+    expected_avg_cc = sum(cc.values()) / len(cc.values())
+    assert avg_clustering_coeffs == expected_avg_cc
 
     # display graph using defaults
     nx.draw(G)
