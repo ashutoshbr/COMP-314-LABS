@@ -7,3 +7,5 @@ Implementation, testing and performance measurement of sorting algorithms.
 Implementation and testing of binary search tree.
 ## Lab 4
 Solving Knapsack problem using different algorithm design strategies.
+## Lab 5
+Using Graph Libraries in Python
