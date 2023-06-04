@@ -36,23 +36,25 @@ def get_diameter(G) -> int:
     return nx.diameter(G)
 
 
-def clustering_coefficient(G) -> dict:
-    coefficients = {}
+def clustering_coefficients(G) -> dict:
+    clustering_coeffs = {}
     for node in G.nodes:
-        degree = len(G.adj[node])
-        if degree <= 1:
-            coefficients[node] = 0
-            continue
-        num_edges = 0
-        for v in G.adj[node]:
-            for u in G.adj[node]:
-                if v == u:
-                    continue
-                if G.has_edge(u, v):
-                    num_edges += 1
-        num_edges = num_edges / 2
-        coefficients[node] = (2 * num_edges) / (degree * (degree - 1))
-    return coefficients
+        neighbours = list(nx.neighbors(G, node))
+        k = len(neighbours)
+        if k > 1:
+            e = 0
+            for v in G.adj[node]:
+                for u in G.adj[node]:
+                    if v == u:
+                        continue
+                    if G.has_edge(u, v):
+                        e += 1
+            e = e / 2
+            clustering_coeffs[node] = (2 * e) / (k * (k - 1))
+        else:
+            clustering_coeffs[node] = 0
+
+    return clustering_coeffs
 
 
 def avg_cc(coefficients: dict) -> float:
@@ -67,9 +69,19 @@ if __name__ == "__main__":
     print("num_of_nodes:", num_of_nodes)
     print("num_of_edges:", num_of_edges)
     print("Average degree:", avg_degree)
-    print("Density: ", get_density(G))
+    density = get_density(G)
+    print("Density: ", density)
     print("Diameter: ", get_diameter(G))
-    print("Avg Clustering Coefficient: ", avg_cc(clustering_coefficient(G)))
+    avg_clustering_coeffs = avg_cc(clustering_coefficients(G))
+    print("Avg Clustering Coefficient: ", avg_clustering_coeffs)
+
+    # Test density
+    expected_den = nx.density(G)
+    assert density == expected_den
+    # Test clustering
+    cc = nx.clustering(G)
+    expected_cc = sum(cc.values()) / len(cc.values())
+    assert avg_clustering_coeffs == expected_cc
 
     # display graph using defaults
     nx.draw(G)
